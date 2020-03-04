@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation=" http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<context:component-scan
+		base-package="com.sri.mvc" />
+
+	<bean id="internalResourceViewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+
+	<bean
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+		id="driverManagerDataSource">
+		<property name="driverClassName" value="${jdbc.class.name}"></property>
+		<property name="url" value="${jdbc.url}"></property>
+		<property name="username" value="${jdbc.username}"></property>
+		<property name="password" value="${jdbc.password}"></property>
+	</bean>
+	<bean
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean"
+		id="localSessionFactoryBean">
+		<property name="dataSource" ref="driverManagerDataSource"></property>
+		<property name="annotatedClasses">
+			<list>
+				<value>com.sri.mvc.Entity.SignuEntity</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+		id="PropertyPlaceholderConfigurer">
+		<property name="location" value="classpath:/Sri.properties"></property>
+		
+
+	</bean>
+	
+
+</beans>
